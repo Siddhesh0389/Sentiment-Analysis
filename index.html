@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Sentiment Analyzer</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="title">Social Media Sentiment Analyzer</h1>
+        <form method="POST" action="/analyze" class="my-4">
+            <div class="mb-3">
+                <label for="city" class="form-label">Select a City:</label>
+                <input type="text" class="form-control" id="city" name="city" placeholder="Enter city name (e.g., Mumbai)" required>
+            </div>
+            <button type="submit" class="btn btn-analyze">Analyze</button>
+        </form>
+        {% if message %}
+        <p class="error-message">{{ message }}</p>
+        {% elif reviews %}
+        <h2 class="results-title mt-5">Reviews for {{ selected_city }}</h2>
+        <div class="table-wrapper">
+            <table class="table table-bordered table-hover mt-3">
+                <thead>
+                    <tr>
+                        <th>Review</th>
+                        <th>Sentiment</th>
+                        <th>Rating</th>
+                        <th>Date</th>
+                        <th>Location</th>
+                        <th>Reviewer ID</th>
+                        <th>Emojis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for review in reviews %}
+                    <tr>
+                        <td>{{ review['Cleaned Review'] }}</td>
+                        <td>{{ review['Sentiment Polarity'] }}</td>
+                        <td>{{ review['Rating'] }}</td>
+                        <td>{{ review['Date'] }}</td>
+                        <td>{{ review['Location'] }}</td>
+                        <td>{{ review['Reviewer ID'] }}</td>
+                        <td>{{ review['Extracted Emojis'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
